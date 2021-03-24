@@ -1,57 +1,73 @@
-var messagesCount = document.getElementsByTagName('p').length;
-document.getElementById('count').textContent = messagesCount;
 
-for(var i=0; i<document.getElementsByClassName('trash').length; i++){
-    document.getElementsByClassName('trash')[i].addEventListener("click",
-    function(){
-        this.parentNode.remove();
-        var messagesCount = document.getElementsByTagName('p').length;
-        document.getElementById('count').textContent = messagesCount;
-    }
-    )
+var btn_add = document.getElementById('btn-add')
+var input = document.getElementById('add-message')
+var mesrow = document.querySelectorAll('.row')
+var span = document.getElementById('count')
+var trash = document.querySelectorAll('img')
 
+
+function compteur() {
+    span.textContent = mesrow.length -2
+    return
+}
+ 
+
+//Dès que la page s'ouvre, execution :
+window.addEventListener("DOMContentLoaded", function (){
+    compteur();
+});
+
+
+btn_add.addEventListener('click',function(){
+
+    //Création de la div Row
+
+    var row = document.createElement('div')
+    row.className = 'row'
+    document.body.appendChild(row)
+
+    //Création de l'image de l'utilisateur
+    var img = document.createElement('img')
+    img.setAttribute('src','avatar-4.jpg')
+    img.className = 'avatar'
+
+    //Création de la poubelle
+    var img_pou = document.createElement('img')
+    img_pou.setAttribute('src','trash.png')
+    img_pou.className = 'trash'
+
+    //Création de la div : nom + paragraphe
+    var nom_p = document.createElement('div')
+
+    //Création du nom + paragraphe
+    var h6 = document.createElement('h6')
+    var p = document.createElement('p')
+
+    //Remplie le nom et le paragraphe
+    h6.textContent = "Souleymann BADRY"
+    p.textContent = input.value
+
+    //Affichage du nom et para...
+    nom_p.appendChild(h6)
+    nom_p.appendChild(p)
+
+    //affichage de la div nom_p
+    row.appendChild(img)
+    row.appendChild(nom_p)
+    row.appendChild(img_pou)
+
+    //mise à jour du compteur
+    document.getElementById('count').textContent=document.querySelectorAll('p').length
+
+    input.value=""
+
+})
+
+for (var e of document.querySelectorAll('.trash')) {
+    e.addEventListener('click',function(){
+        this.parentNode.remove()
+        document.getElementById('count').textContent=document.querySelectorAll('p').length
+    })
+    
 }
 
-document.getElementById('btn-add').addEventListener("click",
-    function(){
-        var mainDiv = document.createElement("div");
-            mainDiv.className = "row";
-            document.body.appendChild(mainDiv);
-
-        var image = document.createElement("img");
-            image.className = "avatar";
-            image.src = "avatar-1.jpg";
-            mainDiv.appendChild(image);
-        
-        var nameMessageDiv = document.createElement("div");
-            mainDiv.appendChild(nameMessageDiv);
-
-        var h6 = document.createElement('h6');
-            h6.textContent = "Eric Dupont";
-            nameMessageDiv.appendChild(h6);
-
-        var content = document.createElement('p');
-            content.textContent = document.getElementById('add-message').value;
-            nameMessageDiv.appendChild(content);
-
-        var trash = document.createElement('img');
-        trash.src = "trash.png";
-        trash.className = "trash";
-        mainDiv.appendChild(trash);
-
-        document.getElementById('add-message').value = "";
-        
-        var messagesCount = document.getElementsByTagName('p').length;
-        document.getElementById('count').textContent = messagesCount;
-
-        
-        trash.addEventListener("click", 
-            function(){
-                this.parentNode.remove();
-                var messagesCount = document.getElementsByTagName('p').length;
-                document.getElementById('count').textContent = messagesCount;
-
-            }
-        )
-    }
-)
